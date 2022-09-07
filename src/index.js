@@ -7,7 +7,7 @@ export function getWordCount(text, options) {
 
     if (options) {
         if (Array.isArray(options)) {
-            const result = iterateWords(wordsArray, options);
+            const result = options.length === 0 ? {} : iterateWords(wordsArray, options);
 
             return result;
         }
