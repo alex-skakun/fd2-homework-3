@@ -1,157 +1,47 @@
+import { splitIntoWords } from "./string-utils.js";
 
+function getObjectElements(arrayAllWords, uniqueElements) {
+  let objectElemens = {};
 
-import { splitIntoWords } from './string-utils.js';
-
-
-
-
-// Two argument(text and array) and return object
-
-
-
-function getAmountWords(target,  arrayAllWords){
-
+  uniqueElements.forEach(function (item1) {
     let amount = 0;
 
-    arrayAllWords.forEach(function(item){
-    
-        if(item === target){
-    
-            amount++;
-        };
-    
-    
+    arrayAllWords.forEach(function (item2) {
+      amount += item1 === item2 ? 1 : 0;
     });
 
-    return amount;
+    objectElemens[item1] = amount;
+  });
 
-};
+  return objectElemens;
+}
 
-
-
-function textAndArrayAndObject(arrayAllWords, arrayTarget){
-
-    let resultObject = {};
-
-
-    for(let char of arrayTarget){
-
-        resultObject[char] = getAmountWords(char, arrayAllWords);
-    
-    
-       };
-
-
-       return resultObject;
-
-};
-
-
-
-
-// Two argument(text and word) and return object
-
-
-function textAndWordAndObject(arrayAllWords, target){
-
-    let amount = 0;
-
-    arrayAllWords.forEach(function(item){
-    
-        if(item === target){
-    
-            amount++;
-        };
-    
-    
-    });
-
-    return amount;
-
-};
-
-
-// One argument(text) and return object
-
-
-function amountWord(diffWords, arrayAllWords){
-
-    let amount = 0;
-
-    let res = arrayAllWords.filter(function(item){
-
-       if(diffWords === item){
-
-        amount++;
-
-       };
-
-
-    });
-
-    return amount;
-    
-
-};
-
-function textAndObject(arrayWords){
-
-    let differentValues = [];
-    
-    let resultObject = {};
-
-
-    for(let char of arrayWords){
- 
-     if(!differentValues .includes(char)){
- 
-        differentValues.push(char);
- 
-     };
- 
-    };
-
-
-   for(let char of differentValues ){
-
-    resultObject[char] = amountWord(char, arrayWords);
-
-
-   };
-
-
-  return  resultObject;
-
-
-};
-
-// Main Function
-
-export function getWordCount(text, argument){
-
-
+export function getWordCount(text, argument) {
   let arrayAllWords = splitIntoWords(text);
+  let arrayUniqueElements = [];
 
+  arrayAllWords.forEach(function (item) {
+    if (!arrayUniqueElements.includes(item)) {
+      arrayUniqueElements.push(item);
+    }
+  });
 
+  if (argument === undefined) {
+    return getObjectElements(arrayAllWords, arrayUniqueElements);
+  }
 
-    if(typeof argument === 'string'){
+  if (Array.isArray(argument)) {
+    return getObjectElements(arrayAllWords, argument);
+  }
 
-       return textAndWordAndObject(arrayAllWords, argument);
+  if (typeof argument === "string") {
+    let amount = 0;
+    arrayAllWords.forEach(function (item) {
+      if (item === argument) {
+        amount++;
+      }
+    });
 
-    }else if(typeof argument === 'object'){
-
-       return textAndArrayAndObject(arrayAllWords, argument);
-
-    }else if(typeof argument === 'undefined'){
-        
-        return textAndObject(arrayAllWords);
-
-    };
-
-
-};
-
-
-
-
-
+    return amount;
+  }
+}
