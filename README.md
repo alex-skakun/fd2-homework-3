@@ -21,6 +21,7 @@ import { getWordCount } from './index.js';
 const allWords = getWordCount('test text with test words');
 
 console.log(allWords);
+
 /* prints next
 {
   test: 2,
